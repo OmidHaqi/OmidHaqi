@@ -10,6 +10,7 @@ who enjoys writing clean and efficient open source codes 👨‍💻
 # 📊 GitHub Stats:
 ![](https://github-readme-stats.vercel.app/api/top-langs/?username=OmidHaqi&theme=radical&hide_border=true&include_all_commits=false&count_private=true&layout=compact)
 ## 🐦 Latest Tweet
-[![](https://gtce.itsvg.in/api?username=Omid_haqi)](https://github.com/VishwaGauravIn/github-twitter-card-embed)
+[![](https://gtce.itsvg.in/api?username=Omid_haqi)](https://github.com/VishwaGauravIn/github-twitter-card-embed)  
+
 ---
 
