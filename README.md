@@ -1,5 +1,5 @@
 # 💫 About Me:
-A software engineer & programmer
+A software engineer & Android developer
 who enjoys writing clean and efficient open source codes 👨‍💻
 
 
