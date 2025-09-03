@@ -1,0 +1,109 @@
+name: Update Lines of Code Scoreboard
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # Runs every Saturday at midnight UTC
+    - cron: "0 0 * * 6"
+  workflow_dispatch:
+
+jobs:
+  count-loc:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout profile repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cloc jq gh
+
+      - name: Authenticate GitHub CLI
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --hostname github.com --with-token
+
+      - name: Count lines of code
+        id: count
+        run: |
+          mkdir -p repos results
+          total_public=0
+          total_private=0
+          USERNAME="${{ github.repository_owner }}"
+
+          for repo in $(gh repo list $USERNAME --limit 200 --json nameWithOwner,visibility,isFork -q '.[] | select(.isFork | not) | @base64'); do
+            _jq() { echo "${repo}" | base64 --decode | jq -r ${1}; }
+            name=$(_jq '.nameWithOwner')
+            visibility=$(_jq '.visibility')
+
+            echo "Cloning $name..."
+            repo_dir="repos/$(basename "$name")"
+            gh repo clone "$name" "$repo_dir" -- --depth 1
+
+            repo_loc=$(cloc "$repo_dir" --json --exclude-dir=node_modules,vendor,dist,build,target,.next | jq '.SUM.code')
+            repo_loc=${repo_loc:-0}
+
+            if [ "$visibility" = "PUBLIC" ]; then
+              short_name=${name#*/}
+              echo "$short_name $repo_loc" >> results/public.txt
+              total_public=$((total_public + repo_loc))
+            else
+              total_private=$((total_private + repo_loc))
+            fi
+
+            rm -rf "$repo_dir"
+          done
+
+          total=$((total_public + total_private))
+
+          {
+            echo "Lines Written Instead of Touching Grass: $total"
+            echo "---------------------------------------------"
+            if [ -f results/public.txt ]; then
+              sort -rn -k2 results/public.txt
+            fi
+            echo "---------------------------------------------"
+            echo "Secret Projects Coded in the Dark: $total_private"
+          } > results/loc.txt
+
+          {
+            echo "LOC_REPORT<<EOF"
+            cat results/loc.txt
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
+
+      - name: Update README
+        run: |
+          LOC_REPORT="${{ steps.count.outputs.LOC_REPORT }}"
+          awk -v new_content="$LOC_REPORT" '
+            /<!-- LOC-START -->/ {
+              print; 
+              print "```"; 
+              print new_content; 
+              print "```"; 
+              in_section=1; 
+              next 
+            }
+            /<!-- LOC-END -->/ { 
+              in_section=0 
+            }
+            !in_section
+          ' README.md > README.tmp && mv README.tmp README.md
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git add README.md
+
+          if ! git diff --staged --quiet; then
+            git commit -m "chore: Update no-life stats"
+            git pull --rebase --autostash || true
+            git push
+          else
+            echo "No changes to commit."
+          fi
