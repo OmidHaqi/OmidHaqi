@@ -13,7 +13,7 @@
 
 <!-- LOC-START -->
 ```
-Lines Written Instead of Touching Grass: 122355
+Lines Written Instead of Touching Grass: 122386
 ---------------------------------------------
 clean-web-api 52493
 Bank-Customer-Churn-Analysis-PowerBI 20077
@@ -36,9 +36,9 @@ KotlinMultiThreading 782
 KotlinSharedPreferences 730
 laravel-simple-monitoring 645
 barberShop 510
+OmidHaqi 160
 HelloWorld 150
 FBI-Go 150
-OmidHaqi 129
 shells 122
 KotlinNetworkChecker 118
 manage-neko-tun-pass 85
