@@ -13,10 +13,11 @@
 
 <!-- LOC-START -->
 ```
-Lines Written Instead of Touching Grass: 123872
+Lines Written Instead of Touching Grass: 136714
 ---------------------------------------------
 clean-web-api 52493
 Bank-Customer-Churn-Analysis-PowerBI 20077
+software-architecture-course-notes 12842
 omidhaqi.github.io 6349
 blurbox 6275
 on_time 5685
