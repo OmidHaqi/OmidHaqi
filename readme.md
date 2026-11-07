@@ -13,9 +13,10 @@
 
 <!-- LOC-START -->
 ```
-Lines Written Instead of Touching Grass: 136721
+Lines Written Instead of Touching Grass: 157534
 ---------------------------------------------
 clean-web-api 52493
+FBI-Go 20963
 Bank-Customer-Churn-Analysis-PowerBI 20077
 software-architecture-course-notes 12842
 omidhaqi.github.io 6349
@@ -40,7 +41,6 @@ laravel-simple-monitoring 645
 barberShop 510
 OmidHaqi 162
 HelloWorld 150
-FBI-Go 150
 shells 122
 KotlinNetworkChecker 118
 tmp 2
