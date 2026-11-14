@@ -13,7 +13,7 @@
 
 <!-- LOC-START -->
 ```
-Lines Written Instead of Touching Grass: 157534
+Lines Written Instead of Touching Grass: 162409
 ---------------------------------------------
 clean-web-api 52493
 FBI-Go 20963
@@ -22,6 +22,7 @@ software-architecture-course-notes 12842
 omidhaqi.github.io 6349
 blurbox 6275
 on_time 5685
+afta-security 4875
 basicGo 4461
 weather_app 3482
 test_data_gen_v1 3399
